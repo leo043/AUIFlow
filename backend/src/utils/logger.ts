@@ -1,10 +1,13 @@
 import { createLogger, format, transports } from 'winston'
 import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-// 加载环境变量
-dotenv.config({ path: '../../config/.env' })
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-// 日志级别配置
+dotenv.config({ path: path.resolve(__dirname, '../../.env') })
+
 const LOG_LEVEL = process.env.LOG_LEVEL || 'info'
 
 // 定义日志格式
@@ -24,33 +27,29 @@ export const logger = createLogger({
   level: LOG_LEVEL,
   format: logFormat,
   transports: [
-    // 控制台输出
     new transports.Console({
       format: format.combine(
         format.colorize(),
         logFormat
       )
     }),
-    // 文件输出 - 所有日志
     new transports.File({
-      filename: '../../logs/combined.log',
-      maxsize: 5242880, // 5MB
+      filename: path.resolve(__dirname, '../../logs/combined.log'),
+      maxsize: 5242880,
       maxFiles: 5,
       tailable: true
     }),
-    // 文件输出 - 错误日志
     new transports.File({
-      filename: '../../logs/error.log',
+      filename: path.resolve(__dirname, '../../logs/error.log'),
       level: 'error',
-      maxsize: 5242880, // 5MB
+      maxsize: 5242880,
       maxFiles: 5,
       tailable: true
     })
   ],
-  // 异常处理
   exceptionHandlers: [
     new transports.File({
-      filename: '../../logs/exceptions.log',
+      filename: path.resolve(__dirname, '../../logs/exceptions.log'),
       maxsize: 5242880,
       maxFiles: 5,
       tailable: true
@@ -58,7 +57,7 @@ export const logger = createLogger({
   ],
   rejectionHandlers: [
     new transports.File({
-      filename: '../../logs/rejections.log',
+      filename: path.resolve(__dirname, '../../logs/rejections.log'),
       maxsize: 5242880,
       maxFiles: 5,
       tailable: true

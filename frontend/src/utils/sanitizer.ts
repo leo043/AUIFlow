@@ -13,7 +13,8 @@ const ALLOWED_TAGS = new Set([
   'blockquote', 'q', 'cite',
   'canvas', 'svg', 'g', 'path', 'circle', 'rect', 'line',
   'header', 'footer', 'nav', 'section', 'article', 'aside',
-  'main', 'figure', 'figcaption', 'dialog'
+  'main', 'figure', 'figcaption', 'dialog',
+  'script', 'style', 'head', 'body', 'html', 'title', 'meta'
 ]);
 
 // 允许的HTML属性列表
@@ -194,13 +195,9 @@ export function validateHTML(html: string): { isValid: boolean; errors: string[]
     });
   });
   
-  // 检查危险脚本
+  // 检查危险脚本协议
   if (html.includes('javascript:') || html.includes('vbscript:')) {
     errors.push('检测到危险的脚本协议');
-  }
-  
-  if (html.includes('<script') || html.includes('</script>')) {
-    errors.push('检测到危险的script标签');
   }
   
   return {

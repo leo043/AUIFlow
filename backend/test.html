@@ -1,0 +1,39 @@
+﻿
+    <div class="container">
+        
+        <header class="header">
+            <h1>📋 任务管理器</h1>
+            <p>高效管理您的日常任务</p>
+        </header>
+
+        
+        <div class="todo-card">
+            
+            <div class="input-section">
+                <form id="todoForm" class="input-group">
+                    <input type="text" id="todoInput" class="todo-input" placeholder="输入新任务，按回车或点击添加..." autocomplete="off" aria-label="任务输入框">
+                    <button type="submit" class="btn btn-primary">
+                        <span>➕</span>
+                        <span>添加任务</span>
+                    </button>
+                </form>
+            </div>
+
+            
+            <ul id="todoList" class="todo-list">
+                
+            </ul>
+
+            
+            <div class="stats" id="stats">
+                <div>总任务: <span id="totalTasks">0</span></div>
+                <div>已完成: <span id="completedTasks">0</span></div>
+                <div>待办: <span id="pendingTasks">0</span></div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="notification" class="notification"></div>
+
+    

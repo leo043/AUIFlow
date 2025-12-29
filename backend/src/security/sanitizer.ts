@@ -92,23 +92,10 @@ export function sanitizeHtml(html: string, options: SanitizeOptions = {}): strin
     const sanitizedHtml = purify.sanitize(filteredHtml, {
       ALLOWED_TAGS: [...securityConfig.ALLOWED_TAGS, ...customTags],
       ALLOWED_ATTR: [...securityConfig.ALLOWED_ATTR, ...customAttrs],
-      ALLOWED_CSS: securityConfig.ALLOWED_CSS,
       FORBID_TAGS: ['script', 'object', 'embed', ...(allowIframes ? [] : ['iframe'])],
       FORBID_ATTR: ['onerror', 'onload', 'onmouseover', ...(!allowInlineScripts ? securityConfig.ALLOWED_ATTR.filter(attr => attr.startsWith('on')) : [])],
       USE_PROFILES: { html: true },
-      ADD_ATTR: ['target'],
-      // 自定义属性检查
-      attributeNameChecker: (node, attr) => {
-        // 允许所有data-*属性
-        if (attr.startsWith('data-')) return true
-        // 允许所有aria-*属性
-        if (attr.startsWith('aria-')) return true
-        return securityConfig.ALLOWED_ATTR.includes(attr) || customAttrs.includes(attr)
-      },
-      // 自定义标签检查
-      tagNameChecker: (tag) => {
-        return securityConfig.ALLOWED_TAGS.includes(tag.toLowerCase()) || customTags.includes(tag.toLowerCase())
-      }
+      ADD_ATTR: ['target']
     })
 
     // 3. 最终检查：确保没有遗漏的危险内容
