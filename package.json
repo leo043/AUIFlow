@@ -1,0 +1,19 @@
+{
+  "name": "auiflow",
+  "version": "1.0.0",
+  "description": "AUIFlow - Dynamic GUI Generation System",
+  "type": "module",
+  "scripts": {
+    "client": "concurrently \"npm run server\" \"npm run frontend\"",
+    "server": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\"",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "keywords": ["auiflow", "gui", "llm", "react", "typescript"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
